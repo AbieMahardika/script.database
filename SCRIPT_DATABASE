@@ -1,0 +1,76 @@
+ CREATE TABLE MAHASISWA(NIM INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY, NAMA VARCHAR(50) NOT NULL, ALAMAT_JLN TEXT NOT NULL, KOTA VARCHAR(50) NOT NULL, KODE_POS INT(10) NOT NULL, NoHP INT(10) NOT NULL, JENKEL VARCHAR(10) NOT NULL, TANGGAL_LAHIR DATE NOT NULL, KODE_DOSEN INT(10) NOT NULL);
+VALUES ('11223344', 'ARI SANTOSO', 'JL.CIBITUNG', 'BEKASI', '17341', '0896657890', 'LAKI-LAKI', '1998-10-12', '1001'), ('11223345', 'ARIO TOLIB', 'JL.CIBARUSAH', 'CIKARANG', '17340', '0896657899', 'LAKI-LAKI', '1999-11-16', '1002'), ('11223346', 'DINA MARLINA', 'JL.KALIMALANG', 'KARAWANG', '17345', '0896657889', 'PEREMPUAN', '1997-12-01', '1003'), ('11223347', 'LISA AYU', 'JL.CIBITUNG', 'BEKASI', '17341', '0896657891', 'PEREMPUAN', '1996-01-02', '1004'), ('11223348', 'TIARA WAHIDAH', 'JL.CIBITUNG', 'BEKASI', '17341', '0896657892', 'PEREMPUAN', '1980-02-05', '1005'), ('11223349','ANTON SINAGA', 'JL.CIBARUSAH', 'CIKARANG', '17340', '0896657893', 'LAKI-LAKI', '1988-03-10', '1006');
+SELECT * FROM MAHASISWA;
+mysql> UPDATE MAHASISWA SET TANGGAL_LAHIR='1979-08-31' WHERE NIM='11223344';
+Query OK, 1 row affected (0.13 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM MAHASISWA WHERE NIM='11223344';
++----------+-------------+-------------+--------+----------+-----------+-----------+---------------+------------+
+| NIM      | NAMA        | ALAMAT_JLN  | KOTA   | KODE_POS | NoHP      | JENKEL    | TANGGAL_LAHIR | KODE_DOSEN |
++----------+-------------+-------------+--------+----------+-----------+-----------+---------------+------------+
+| 11223344 | ARI SANTOSO | JL.CIBITUNG | BEKASI |    17341 | 896657890 | LAKI-LAKI | 1979-08-31    |       1001 |
++----------+-------------+-------------+--------+----------+-----------+-----------+---------------+------------+
+1 row in set (0.02 sec)
+
+mysql> DELETE FROM MAHASISWA WHERE NIM='11223346';
+Query OK, 1 row affected (0.05 sec)
+
+mysql> SELECT * FROM MAHASISWA;
++----------+---------------+----------------+----------+----------+-----------+-----------+---------------+------------+
+| NIM      | NAMA          | ALAMAT_JLN     | KOTA     | KODE_POS | NoHP      | JENKEL    | TANGGAL_LAHIR | KODE_DOSEN |
++----------+---------------+----------------+----------+----------+-----------+-----------+---------------+------------+
+| 11223344 | ARI SANTOSO   | JL.CIBITUNG    | BEKASI   |    17341 | 896657890 | LAKI-LAKI | 1979-08-31    |       1001 |
+| 11223345 | ARIO TOLIB    | JL.CENDRAWASIH | CIKARANG |    17340 | 896657899 | LAKI-LAKI | 1999-11-16    |       1002 |
+| 11223347 | LISA AYU      | JL.CIBITUNG    | BEKASI   |    17341 | 896657891 | PEREMPUAN | 1996-01-02    |       1004 |
+| 11223348 | TIARA WAHIDAH | JL.CIBITUNG    | BEKASI   |    17341 | 896657892 | PEREMPUAN | 1980-02-05    |       1005 |
+| 11223349 | ANTON SINAGA  | JL.CIBARUSAH   | CIKARANG |    17340 | 896657893 | LAKI-LAKI | 1988-03-10    |       1006 |
++----------+---------------+----------------+----------+----------+-----------+-----------+---------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM MAHASISWA WHERE TANGGAL_LAHIR >='1996-01-02';
++----------+------------+----------------+----------+----------+-----------+-----------+---------------+------------+
+| NIM      | NAMA       | ALAMAT_JLN     | KOTA     | KODE_POS | NoHP      | JENKEL    | TANGGAL_LAHIR | KODE_DOSEN |
++----------+------------+----------------+----------+----------+-----------+-----------+---------------+------------+
+| 11223345 | ARIO TOLIB | JL.CENDRAWASIH | CIKARANG |    17340 | 896657899 | LAKI-LAKI | 1999-11-16    |       1002 |
+| 11223347 | LISA AYU   | JL.CIBITUNG    | BEKASI   |    17341 | 896657891 | PEREMPUAN | 1996-01-02    |       1004 |
++----------+------------+----------------+----------+----------+-----------+-----------+---------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM MAHASISWA WHERE KOTA='BEKASI' AND JENKEL='PEREMPUAN';
++----------+---------------+-------------+--------+----------+-----------+-----------+---------------+------------+
+| NIM      | NAMA          | ALAMAT_JLN  | KOTA   | KODE_POS | NoHP      | JENKEL    | TANGGAL_LAHIR | KODE_DOSEN |
++----------+---------------+-------------+--------+----------+-----------+-----------+---------------+------------+
+| 11223347 | LISA AYU      | JL.CIBITUNG | BEKASI |    17341 | 896657891 | PEREMPUAN | 1996-01-02    |       1004 |
+| 11223348 | TIARA WAHIDAH | JL.CIBITUNG | BEKASI |    17341 | 896657892 | PEREMPUAN | 1980-02-05    |       1005 |
++----------+---------------+-------------+--------+----------+-----------+-----------+---------------+------------+
+2 rows in set (0.00 sec)
+ SELECT * FROM MAHASISWA WHERE KOTA='BEKASI' AND JENKEL='LAKI-LAKI';
++----------+-------------+-------------+--------+----------+-----------+-----------+---------------+------------+
+| NIM      | NAMA        | ALAMAT_JLN  | KOTA   | KODE_POS | NoHP      | JENKEL    | TANGGAL_LAHIR | KODE_DOSEN |
++----------+-------------+-------------+--------+----------+-----------+-----------+---------------+------------+
+| 11223344 | ARI SANTOSO | JL.CIBITUNG | BEKASI |    17341 | 896657890 | LAKI-LAKI | 1979-08-31    |       1001 |
++----------+-------------+-------------+--------+----------+-----------+-----------+---------------+------------+
+1 row in set (0.02 sec)
+ SELECT NAMA, ALAMAT_JLN FROM MAHASISWA;
++---------------+----------------+
+| NAMA          | ALAMAT_JLN     |
++---------------+----------------+
+| ARI SANTOSO   | JL.CIBITUNG    |
+| ARIO TOLIB    | JL.CENDRAWASIH |
+| LISA AYU      | JL.CIBITUNG    |
+| TIARA WAHIDAH | JL.CIBITUNG    |
+| ANTON SINAGA  | JL.CIBARUSAH   |
++---------------+----------------+
+5 rows in set (0.00 sec)
+ SELECT * FROM MAHASISWA ORDER BY NAMA ASC;
++----------+---------------+----------------+----------+----------+-----------+-----------+---------------+------------+
+| NIM      | NAMA          | ALAMAT_JLN     | KOTA     | KODE_POS | NoHP      | JENKEL    | TANGGAL_LAHIR | KODE_DOSEN |
++----------+---------------+----------------+----------+----------+-----------+-----------+---------------+------------+
+| 11223349 | ANTON SINAGA  | JL.CIBARUSAH   | CIKARANG |    17340 | 896657893 | LAKI-LAKI | 1988-03-10    |       1006 |
+| 11223344 | ARI SANTOSO   | JL.CIBITUNG    | BEKASI   |    17341 | 896657890 | LAKI-LAKI | 1979-08-31    |       1001 |
+| 11223345 | ARIO TOLIB    | JL.CENDRAWASIH | CIKARANG |    17340 | 896657899 | LAKI-LAKI | 1999-11-16    |       1002 |
+| 11223347 | LISA AYU      | JL.CIBITUNG    | BEKASI   |    17341 | 896657891 | PEREMPUAN | 1996-01-02    |       1004 |
+| 11223348 | TIARA WAHIDAH | JL.CIBITUNG    | BEKASI   |    17341 | 896657892 | PEREMPUAN | 1980-02-05    |       1005 |
++----------+---------------+----------------+----------+----------+-----------+-----------+---------------+------------+
+5 rows in set (0.00 sec)
