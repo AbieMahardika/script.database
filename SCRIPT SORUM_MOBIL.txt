@@ -1,0 +1,160 @@
+					SCRIPT MEMBUAT DATABASE SORUM_MOBIL
+
+mysql> CREATE DATABASE SORUM_MOBIL;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| latihan01          |
+| mysql              |
+| performance_schema |
+| perusahaan         |
+| pet_shop           |
+| praktikum          |
+| praktikum1         |
+| sekolah            |
+| sorum_mobil        |
+| test               |
++--------------------+
+11 rows in set (0.00 sec)
+
+mysql> USE SORUM_MOBIL;
+Database changed
+mysql> CREATE TABLE DATA_MOBIL
+    -> (KODE CHAR(10) PRIMARY KEY,
+    -> JENIS VARCHAR(20) NOT NULL,
+    -> MERK VARCHAR(20) NOT NULL,
+    -> TARIF INT(20) NOT NULL,
+    -> NOPOL VARCHAR(20) NOT NULL);
+Query OK, 0 rows affected (0.16 sec)
+
+mysql> DESC DATA_MOBIL;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| KODE  | char(10)    | NO   | PRI | NULL    |       |
+| JENIS | varchar(20) | NO   |     | NULL    |       |
+| MERK  | varchar(20) | NO   |     | NULL    |       |
+| TARIF | int(20)     | NO   |     | NULL    |       |
+| NOPOL | varchar(20) | NO   |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+5 rows in set (0.05 sec)
+
+mysql> INSERT INTO DATA_MOBIL (KODE, JENIS, MERK, TARIF, NOPOL)
+    -> VALUES
+    -> ('M001', 'SEDAN', 'BMW E5', '350000', 'BG1234AA'),
+    -> ('M002', 'SEDAN', 'HONDA CRV', '500000', 'BG2345BB'),
+    -> ('M003', 'BUS', 'MERCEDEZ', '1000000', 'BG3456CC'),
+    -> ('M004', 'BUS', 'DYNA', '800000', 'BG8443DD'),
+    -> ('M0005', 'TRUCK', 'HYNO ZX', '1500000', 'BG4638EE'),
+    -> ('M0006', 'TRUCK', 'DYNA X1', '1500000', 'BG8473FF');
+Query OK, 6 rows affected (0.09 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> CREATE TABLE PELANGGAN
+    -> (KODE CHAR(10) PRIMARY KEY,
+    -> NAMA VARCHAR(20) NOT NULL,
+    -> KONTAK VARCHAR(20) NOT NULL,
+    -> ALAMAT TEXT NOT NULL,
+    -> KOTA VARCHAR(20) NOT NULL,
+    -> KODE_POS INT(10) NOT NULL,
+    -> TELEPON INT (10) NOT NULL);
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> DESC PELANGGAN;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| KODE     | char(10)    | NO   | PRI | NULL    |       |
+| NAMA     | varchar(20) | NO   |     | NULL    |       |
+| KONTAK   | varchar(20) | NO   |     | NULL    |       |
+| ALAMAT   | text        | NO   |     | NULL    |       |
+| KOTA     | varchar(20) | NO   |     | NULL    |       |
+| KODE_POS | int(10)     | NO   |     | NULL    |       |
+| TELEPON  | int(10)     | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+7 rows in set (0.05 sec)
+
+mysql> INSERT INTO PELANGGAN (KODE, NAMA, KONTAK, ALAMAT, KOTA, KODE_POS, TELEPON)
+    -> VALUES
+    -> ('P001', 'PT FOX RIVER', 'HENDRA', 'JL. JEND. SUDIRMAN 657', 'BENGKULU', '30245', '1234567'),
+    -> ('P002', 'CV FOXCOM', 'IWAN', 'JL. WAHID HASYIM 743', 'JAKARTA', '73429', '234567'),
+    -> ('P003', 'PT FARMACOM', 'YANI', 'JL, AHMAD DAHLAN 45', 'LAMPUNG', '28349', '3334445');
+Query OK, 3 rows affected (1.33 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> CREATE TABLE DATA_SEWA
+    -> ( NOFAKTURSEWA CHAR(5) NOT NULL,
+    -> KODE_PELANGGAN CHAR(5) NOT NULL,
+    -> TGL_SEWA DATE NOT NULL,
+    -> KODE_MOBIL VARCHAR(20) NOT NULL,
+    -> LAMA_SEWA VARCHAR(20) NOT NULL,
+    -> UANG_MUKA INT(20) NOT NULL);
+Query OK, 0 rows affected (0.23 sec)
+
+mysql> DESC DATA_SEWA;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| NOFAKTURSEWA   | char(5)     | NO   |     | NULL    |       |
+| KODE_PELANGGAN | char(5)     | NO   |     | NULL    |       |
+| TGL_SEWA       | date        | NO   |     | NULL    |       |
+| KODE_MOBIL     | varchar(20) | NO   |     | NULL    |       |
+| LAMA_SEWA      | varchar(20) | NO   |     | NULL    |       |
+| UANG_MUKA      | int(20)     | NO   |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+6 rows in set (0.05 sec)
+
+mysql> INSERT INTO DATA_SEWA (NOFAKTURSEWA, KODE_PELANGGAN, TGL_SEWA, KODE_MOBIL, LAMA_SEWA, UANG_MUKA)
+    -> VALUES
+    -> ('F001', 'P001', '2008-12-01', 'M001', '2', '200000'),
+    -> ('F002', 'P001', '2008-12-01', 'M003', '2', '200000'),
+    -> ('F001', 'P002', '2008-12-02', 'M002', '1', '100000');
+Query OK, 3 rows affected (0.08 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT DATA_MOBIL.KODE, DATA_MOBIL.JENIS, DATA_MOBIL.MERK, DATA_SEWA.NOFAKTURSEWA, DATA_SEWA.TGL_SEWA, DATA_SEWA.LAMA_SEWA
+    -> FROM DATA_MOBIL
+    -> LEFT JOIN DATA_SEWA
+    -> ON DATA_MOBIL.KODE=DATA_SEWA.KODE_MOBIL;
++------+-------+-----------+--------------+------------+-----------+
+| kode | jenis | merk      | nofaktursewa | tgl_sewa   | lama_sewa |
++------+-------+-----------+--------------+------------+-----------+
+| M001 | SEDAN | BMW E5    | F001         | 2008-12-01 | 2         |
+| M002 | SEDAN | HONDA CRV | F001         | 2008-12-02 | 1         |
+| M003 | BUS   | MERCEDEZ  | F001         | 2008-12-01 | 2         |
+| M004 | BUS   | DYNA      | NULL         | NULL       | NULL      |
+| M005 | TRUCK | HYNO ZX   | NULL         | NULL       | NULL      |
+| M006 | TRUCK | DYNA X1   | NULL         | NULL       | NULL      |
++------+-------+-----------+--------------+------------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT DATA_SEWA.NOFAKTURSEWA, PELANGGAN.NAMA, DATA_SEWA.TGL_SEWA, DATA_MOBIL.JENIS, DATA_MOBIL.MERK, DATA_SEWA.LAMA_SEWA, DATA_SEWA.UANG_MUKA
+    -> FROM DATA_MOBIL
+    -> INNER JOIN DATA_SEWA ON DATA_MOBIL.KODE=DATA_SEWA.KODE_MOBIL
+    -> INNER JOIN PELANGGAN ON DATA_SEWA.KODE_PELANGGAN=PELANGGAN.KODE;
++--------------+--------------+------------+-------+-----------+-----------+-----------+
+| nofaktursewa | nama         | tgl_sewa   | jenis | merk      | lama_sewa | uang_muka |
++--------------+--------------+------------+-------+-----------+-----------+-----------+
+| F001         | PT FOX RIVER | 2008-12-01 | SEDAN | BMW E5    | 2         |   200000  |
+| F001         | PT FOX RIVER | 2008-12-01 | BUS   | MERCEDEZ  | 2         |   200000  |
+| F001         | CV FOXCOM    | 2008-12-02 | SEDAN | HONDA CRV | 1         |   100000  |
++--------------+--------------+------------+-------+-----------+-----------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT PELANGGAN.NAMA, PELANGGAN.KOTA, DATA_SEWA.NOFAKTURSEWA, DATA_SEWA.TGL.SEWA, DATA_SEWA.KODE_MOBIL, DATA_SEWA.LAMA_SEWA, DATA_SEWA.UANG_MUKA
+    -> FROM PELANGGAN
+    -> LEFT JOINT DATA_SEWA
+    -> ON PELANGGAN.KODE=DATA_SEWA.KODE_PELANGGAN;
++--------------+----------+--------------+------------+------------+-----------+-----------+
+| nama         | kota     | nofaktursewa | tgl_sewa   | kode_mobil | lama_sewa | uang_muka |
++--------------+----------+--------------+------------+------------+-----------+-----------+
+| PT FOX RIVER | BENGKULU | F001         | 2008-12-01 | M001       | 2         |   200000  |
+| PT FOX RIVER | BENGKULU | F001         | 2008-12-01 | M003       | 2         |   200000  |
+| CV FOXCOM    | JAKARTA  | F001         | 2008-12-02 | M002       | 1         |   100000  |
+| PT FARMACOM  | LAMPUNG  | NULL         | NULL       | NULL       | NULL      |     NULL  |
++--------------+----------+--------------+------------+------------+-----------+-----------+
+4 rows in set (0.00 sec)
