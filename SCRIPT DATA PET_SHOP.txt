@@ -1,0 +1,141 @@
+						SCRIPT MEMBUAT DATABASE PET_SHOP
+
+mysql> CREATE DATABASE PET_SHOP;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| latihan01          |
+| mysql              |
+| performance_schema |
+| perusahaan         |
+| pet_shop           |
+| praktikum          |
+| praktikum1         |
+| sekolah            |
+| test               |
++--------------------+
+10 rows in set (0.09 sec)
+
+mysql> USE PET_SHOP;
+Database changed
+
+mysql> DESC HEWAN;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| NAMA    | varchar(15) | NO   |     | NULL    |       |
+| OWNER   | varchar(15) | NO   |     | NULL    |       |
+| SPECIES | varchar(15) | NO   |     | NULL    |       |
+| SEX     | varchar(15) | NO   |     | NULL    |       |
+| BIRTH   | varchar(15) | NO   |     | NULL    |       |
+| DEATH   | varchar(15) | NO   |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> INSERT INTO HEWAN (NAMA, OWNER, SPECIES, SEX, BIRTH, DEATH)
+    -> VALUES
+    -> ("Puffball", "Diane", "Hamster", "F", "1999-03-03", "NULL"),
+    -> ("Claws", "Gwen", "Cat", "M", "1994-03-17", "NULL"),
+    -> ("Fluffy", "Harlod", "Cat", "F", "1993-02-04", "NULL"),
+    -> ("Buffy", "Harlod", "Dog", "F", "1989-05-13", "NULL"),
+    -> ("Fang", "Benny", "Dog", "M", "1990-08-27", "NULL"),
+    -> ("Bowser", "Diane", "Dog", "M", "1989-08-31", "1995-07-29"),
+    -> ("Chirpy", "Gwen", "Bird", "F", "1998-09-11", "NULL"),
+    -> ("Whistler", "Gwen", "Bird", "NULL", "1997-12-09", "NULL"),
+    -> ("Slim", "Benny", "Snake", "M", "1996-04-29", "NULL");
+Query OK, 9 rows affected (0.06 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM HEWAN;
++----------+--------+---------+------+------------+------------+
+| NAMA     | OWNER  | SPECIES | SEX  | BIRTH      | DEATH      |
++----------+--------+---------+------+------------+------------+
+| Puffball | Diane  | Hamster | F    | 1999-03-03 | NULL       |
+| Claws    | Gwen   | Cat     | M    | 1994-03-17 | NULL       |
+| Fluffy   | Harlod | Cat     | F    | 1993-02-04 | NULL       |
+| Buffy    | Harlod | Dog     | F    | 1989-05-13 | NULL       |
+| Fang     | Benny  | Dog     | M    | 1990-08-27 | NULL       |
+| Bowser   | Diane  | Dog     | M    | 1989-08-31 | 1995-07-29 |
+| Chirpy   | Gwen   | Bird    | F    | 1998-09-11 | NULL       |
+| Whistler | Gwen   | Bird    | NULL | 1997-12-09 | NULL       |
+| Slim     | Benny  | Snake   | M    | 1996-04-29 | NULL       |
++----------+--------+---------+------+------------+------------+
+9 rows in set (0.00 sec)
+
+mysql> SELECT OWNER, COUNT(SPECIES) AS JUMLAH FROM HEWAN GROUP BY OWNER;
++--------+--------+
+| OWNER  | JUMLAH |
++--------+--------+
+| Benny  |      2 |
+| Diane  |      2 |
+| Gwen   |      3 |
+| Harlod |      2 |
++--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT SPECIES, COUNT(OWNER) AS JUMLAH FROM HEWAN GROUP BY SPECIES;
++---------+--------+
+| SPECIES | jumlah |
++---------+--------+
+| Bird    |      2 |
+| Cat     |      2 |
+| Dog     |      3 |
+| Hamster |      1 |
+| Snake   |      1 |
++---------+--------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT SEX, COUNT(SPECIES) AS JUMLAH FROM HEWAN GROUP BY SEX;
++------+--------+
+| SEX  | jumlah |
++------+--------+
+| F    |      4 |
+| M    |      4 |
+| NULL |      1 |
++------+--------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT SPECIES, SEX, COUNT(OWNER) AS JUMLAH HEWAN GROUP BY SPECIES, SEX;
++---------+------+--------+
+| SPECIES | SEX  | jumlah |
++---------+------+--------+
+| Bird    | F    |      1 |
+| Bird    | NULL |      1 |
+| Cat     | F    |      1 |
+| Cat     | M    |      1 |
+| Dog     | F    |      1 |
+| Dog     | M    |      2 |
+| Hamster | F    |      1 |
+| Snake   | M    |      1 |
++---------+------+--------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT SPECIES, SEX, COUNT(OWNER) AS JUMLAH FROM HEWAN
+    -> WHERE SPECIES <> "HAMSTER"
+    -> AND SPECIES <> "BIRD"
+    -> AND SPECIES <> "SNAKE"
+    -> GROUP BY SPECIES, SEX;
++---------+-----+--------+
+| SPECIES | SEX | jumlah |
++---------+-----+--------+
+| Cat     | F   |      1 |
+| Cat     | M   |      1 |
+| Dog     | F   |      1 |
+| Dog     | M   |      2 |
++---------+-----+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT SEX, COUNT(SPECIES) AS JUMLAH FROM HEWAN
+    -> WHERE SEX <> "NULL"
+    -> GROUP BY SEX;
++-----+--------+
+| SEX | jumlah |
++-----+--------+
+| F   |      4 |
+| M   |      4 |
++-----+--------+
+2 rows in set (0.00 sec)
